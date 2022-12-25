@@ -11,6 +11,15 @@ namespace TransferMoney.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+
+        private bool isEnabled;
+
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set { isEnabled = value; }
+        }
+
         private string cardNumber;
 
         public string CardNumber
@@ -31,8 +40,10 @@ namespace TransferMoney.ViewModels
         }
 
         public RelayCommand LoadDataCommand { get; set; }
+        public RelayCommand InsertCardCommand { get; set; }
         public MainViewModel()
         {
+            IsEnabled = false;
             User = new User();
             Users = new List<User>()
             {
@@ -56,8 +67,12 @@ namespace TransferMoney.ViewModels
                 }
             };
 
+            InsertCardCommand = new RelayCommand((o) =>
+            {
+                IsEnabled = !IsEnabled;
+            });
 
-            LoadDataCommand = new RelayCommand((o) =>
+        LoadDataCommand = new RelayCommand((o) =>
             {
                 User = Users.FirstOrDefault((u) => { return u.CardNumber == CardNumber; });
                 if (User == null) MessageBox.Show("User not found");
