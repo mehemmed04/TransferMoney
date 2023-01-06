@@ -26,6 +26,7 @@ namespace TransferMoney
             InitializeComponent();
             MainViewModel vm = new MainViewModel();
             this.DataContext = vm;
+           // Closing += vm.OnWindowClosing;
         }
     }
 }

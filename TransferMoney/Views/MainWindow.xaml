@@ -3,9 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TransferMoney"
+        xmlns:local="clr-namespace:TransferMoney" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" CommandParameter="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <StackPanel Margin="10">
         <StackPanel Orientation="Horizontal"
                     Margin="10">
@@ -33,20 +40,31 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10">
                 <TextBlock FontSize="18">Balance :</TextBlock>
-                <TextBlock FontSize="18" Text="{Binding User.Balance}" Margin="10,0,0,0"></TextBlock>
+                <TextBlock FontSize="18" Text="{Binding Balance,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"></TextBlock>
                 <TextBlock FontSize="18" Margin="10,0,0,0">$</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontSize="18">Amount of money : </TextBlock>
-                <TextBox Width="100" Margin="10,0,0,0" FontSize="18"></TextBox>
+                <TextBox Width="100" Margin="10,0,0,0" FontSize="18"
+                         Text="{Binding Money}"></TextBox>
             </StackPanel>
 
-            <Button Width="180" FontSize="20" Margin="0,20">Transfer Money </Button>
+            <Button Width="180" FontSize="20" Margin="0,20"
+                    Command="{Binding TransferMoneyCommand}">Transfer Money </Button>
             
             
             
         </StackPanel>
+
+        <ProgressBar
+            Height="25"
+            Width="200"
+             Minimum="0"
+            Maximum="100"
+              Value="{Binding ProgressValue}">
+            
+        </ProgressBar>
         
     </StackPanel>
 </Window>
